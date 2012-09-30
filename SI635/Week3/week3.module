@@ -1,0 +1,27 @@
+<?php
+
+# hooks
+# if you change this, refresh the cache.
+function week3_menu() {
+
+    $items = array();
+    $items['hw'] = array(
+        'title' => 'hello world',
+        'description' => 'Hello world page',
+        'page callback' => 'week3_hw',
+#        'page arguments' =>  array(1),
+        'access callback' => TRUE,
+    );
+        
+    return $items;
+
+}
+
+function week3_hw() {
+
+     return t("Hello World. Hot damn, it works!");
+#    return $var;
+
+}
+
+
