@@ -1,0 +1,25 @@
+<?php
+
+function week4_menu()
+{
+    $items = array();
+    
+    $items['week4'] = array (
+        'page callback' => 'week4_do',
+        'access callback' => 'user_access',
+        'access arguments' => array('admin week4'),
+    );
+    
+    return $items;
+        
+}
+
+function week4_do()
+{
+    return t('hello');
+}
+
+function week4_permission()
+{
+
+}
