@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>MyForm</title>
+</head>
+
+<body>
+<form id="form1" name="form1" method="post" action="">
+  <p>
+    <label for="formname">Name</label>
+    <input type="text" name="name" id="name" />
+  </p>
+  <p>
+    <label>
+      <input type="radio" name="Gender" value="male" id="Gender_0" />
+      Male</label>
+    <br />
+    <label>
+      <input type="radio" name="Gender" value="female" id="Gender_1" />
+      Female</label>
+  </p>
+  <p>
+    <label for="specialization">Specialization</label>
+    <select name="specialization" id="specialization">
+      <option value="arm">ARM</option>
+      <option value="lis">LIS</option>
+      <option value="hci">HCI</option>
+      <option value="tailored">Tailored</option>
+      <option value="pi">PI</option>
+    </select>
+  </p>
+  <p>
+    <label for="description">Describe your study</label>
+    <textarea name="description" id="description" cols="45" rows="5"></textarea>
+  </p>
+  <p>
+    <input type="submit" name="submit" id="submit" value="Submit" />
+  </p>
+
+</form>
+</body>
+</html>
