@@ -65,7 +65,8 @@ function week4_do($param1 = '')
     if ($param1 == '')
         return t('week4');
     
-    // this should be passed to t() for sanitation, but for the assignment, I'm using check_plain()
+    // this should be passed to t() for sanitation/translation,
+    // but I'm using check_plain() for demonstration purposes
     return check_plain($param1);
     
 }
@@ -77,29 +78,34 @@ function week4_do_link()
 
 function week4_do_t_test1()
 {
-    return t('week4_do_t_test1');
+    return t('Here we have the simplest of t() usage. Just a string, no vars, no options.');
 }
 
-function week4_do_t_test2()
+function week4_do_t_test2($param1 = 'default')
 {
-    return t('week4_do_t_test2');
+    $retval = t('The param from the url: @uparam, would be translated with the string, but if using the exclamation placeholder, !uparamasis would not.', array('@uparam' => $param1,  '!uparamasis' => $param1));
+    
+    return $retval;
 }
 
-function week4_do_t_test3()
+function week4_do_t_test3($param1 = 'default')
 {
-    return t('week4_do_t_test3');
+    $retval = t('The param from the url: @uparam, or %uparamem theme emphasized, should have been translated with the rest of this string.', array('@uparam' => $param1,  '%uparamem' => $param1));
+    
+    return $retval;
 }
 
 function week4_do_t_test4()
 {
-    return t('week4_do_t_test4');
+    $retval = t('this string would be translated into spanish, if all was set up properly', array(), array('langcode' => 'es'));
+    return $retval;
 }
 
 function week4_do_t_test5($param1 = 'default')
 {
-    $returnval = t('The param from the url: @uparam, should have been translated with the rest of this string', array('@uparam' => $param1));
+    $retval = t('The param from the url: @uparam, should have been translated with the rest of this string', array('@uparam' => $param1));
 
-    return $returnval;
+    return $retval;
 }
 
 function week4_permission()
