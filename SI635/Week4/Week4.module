@@ -25,28 +25,28 @@ function week4_menu()
         'access arguments' => array('admin week4'),
     );
     
-        $items['week4/ttest2'] = array(
+    $items['week4/ttest2'] = array(
         'title' => 'Week4 t() test 2',
         'page callback' => 'week4_do_t_test2',
         'access callback' => 'user_access',
         'access arguments' => array('admin week4'),
     );
     
-        $items['week4/ttest3'] = array(
+    $items['week4/ttest3'] = array(
         'title' => 'Week4 t() test 3',
         'page callback' => 'week4_do_t_test3',
         'access callback' => 'user_access',
         'access arguments' => array('admin week4'),
     );
     
-        $items['week4/ttest4'] = array(
+    $items['week4/ttest4'] = array(
         'title' => 'Week4 t() test 4',
         'page callback' => 'week4_do_t_test4',
         'access callback' => 'user_access',
         'access arguments' => array('admin week4'),
     );
     
-        $items['week4/ttest5'] = array(
+    $items['week4/ttest5'] = array(
         'title' => 'Week4 t() test 5',
         'page callback' => 'week4_do_t_test5',
         'access callback' => 'user_access',
