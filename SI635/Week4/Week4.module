@@ -49,7 +49,6 @@ function week4_menu()
     $items['week4/ttest5'] = array(
         'title' => 'Week4 t() test 5',
         'page callback' => 'week4_do_t_test5',
-#        'page arguments' => array(1),
         'access callback' => 'user_access',
         'access arguments' => array('admin week4'),
     );
