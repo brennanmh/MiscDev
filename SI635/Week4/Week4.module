@@ -49,16 +49,25 @@ function week4_menu()
     $items['week4/ttest5'] = array(
         'title' => 'Week4 t() test 5',
         'page callback' => 'week4_do_t_test5',
+#        'page arguments' => array(1),
         'access callback' => 'user_access',
         'access arguments' => array('admin week4'),
     );
+    
 
     return $items;
 }
 
-function week4_do()
+
+function week4_do($param1 = '')
 {
-    return t('week4');
+
+    if ($param1 == '')
+        return t('week4');
+    
+    // this should be passed to t() for sanitation, but for the assignment, I'm using check_plain()
+    return check_plain($param1);
+    
 }
 
 function week4_do_link()
@@ -86,9 +95,11 @@ function week4_do_t_test4()
     return t('week4_do_t_test4');
 }
 
-function week4_do_t_test5()
+function week4_do_t_test5($param1 = 'default')
 {
-    return t('week4_do_t_test5');
+    $returnval = t('The param from the url: @uparam, should have been translated with the rest of this string', array('@uparam' => $param1));
+
+    return $returnval;
 }
 
 function week4_permission()
