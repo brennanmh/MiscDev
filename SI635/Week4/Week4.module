@@ -3,23 +3,102 @@
 function week4_menu()
 {
     $items = array();
-    
-    $items['week4'] = array (
+
+    $items['week4'] = array(
+        'title' => 'Week4',
         'page callback' => 'week4_do',
         'access callback' => 'user_access',
         'access arguments' => array('admin week4'),
     );
     
+    $items['week4/link'] = array(
+        'title' => 'Week4 Link',
+        'page callback' => 'week4_do_link',
+        'access callback' => 'user_access',
+        'access arguments' => array('admin week4'),
+    );
+    
+    $items['week4/ttest1'] = array(
+        'title' => 'Week4 t() test 1',
+        'page callback' => 'week4_do_t_test1',
+        'access callback' => 'user_access',
+        'access arguments' => array('admin week4'),
+    );
+    
+        $items['week4/ttest2'] = array(
+        'title' => 'Week4 t() test 2',
+        'page callback' => 'week4_do_t_test2',
+        'access callback' => 'user_access',
+        'access arguments' => array('admin week4'),
+    );
+    
+        $items['week4/ttest3'] = array(
+        'title' => 'Week4 t() test 3',
+        'page callback' => 'week4_do_t_test3',
+        'access callback' => 'user_access',
+        'access arguments' => array('admin week4'),
+    );
+    
+        $items['week4/ttest4'] = array(
+        'title' => 'Week4 t() test 4',
+        'page callback' => 'week4_do_t_test4',
+        'access callback' => 'user_access',
+        'access arguments' => array('admin week4'),
+    );
+    
+        $items['week4/ttest5'] = array(
+        'title' => 'Week4 t() test 5',
+        'page callback' => 'week4_do_t_test5',
+        'access callback' => 'user_access',
+        'access arguments' => array('admin week4'),
+    );
+
     return $items;
-        
 }
 
 function week4_do()
 {
-    return t('hello');
+    return t('week4');
+}
+
+function week4_do_link()
+{
+    return l(t('go here'), 'http://www.brennanmh.com');
+}
+
+function week4_do_t_test1()
+{
+    return t('week4_do_t_test1');
+}
+
+function week4_do_t_test2()
+{
+    return t('week4_do_t_test2');
+}
+
+function week4_do_t_test3()
+{
+    return t('week4_do_t_test3');
+}
+
+function week4_do_t_test4()
+{
+    return t('week4_do_t_test4');
+}
+
+function week4_do_t_test5()
+{
+    return t('week4_do_t_test5');
 }
 
 function week4_permission()
 {
+
+  return array(
+    'week4' => array(
+      'title' => t('Week4 Permissions'), 
+      'description' => t('Administer week4 permissions'),
+    ),
+  );
 
 }
