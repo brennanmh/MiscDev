@@ -1,0 +1,119 @@
+<?php
+
+
+function week5_menu() {
+    
+    $items = array();
+    $items['week5'] = array(
+       'title' => 'Week5',
+       'access callback'=>TRUE,
+       'page callback' => 'week5_start',
+    );
+
+    return $items;
+
+}
+
+
+function week5_start() {
+    return drupal_get_form('week5_form');
+}
+
+
+function week5_form($form,&$form_state) {
+
+    $form = array();
+
+    // name field
+    $form['name'] = array (
+        '#type'=>'textfield',
+        '#title'=>t('What\'s your name?'),
+        '#description'=>t('Enter your name already!'),
+        '#required'=>TRUE,
+    );
+
+    // gender field
+    $gender = array();
+    $gender['m'] = t('Male');
+    $gender['f'] = t('Female');
+
+    $form['gender'] = array(
+        '#type' => 'radios',
+        '#title' => t('What is your gender?'),
+        '#options' => $gender,
+    );
+    
+    // specialization field
+    $specializations = array(
+        'arm'      => t('Archives and Record Management'),
+        'hci'      => t('Human Computer Interaction'),
+        'iar'      => t('Information Analysis and Retrieval'),
+        'iem'      => t('Information Economics for Management'),
+        'lis'      => t('Library and Information Science'),
+        'pi'       => t('Preservation of Information'),
+        'slm'      => t('School Library Media'),
+        'sc'       => t('Social Computing'),
+        'tailored' => t('Tailored'),
+    );
+    
+    // save the values so we can use them in the submit handler
+    variable_set('specializations', $specializations);  
+      
+    $form['specialization'] = array(
+        '#type' => 'select',
+        '#title' => t('What is your specialization?'),
+        '#required' => TRUE,
+        '#options' => $specializations,
+    );
+    
+    // study description
+    $form['description'] = array(
+        '#type' => 'textarea',
+        '#title' => t('Describe your study'),
+        '#rows' => '5',
+        '#cols' => '45',
+    );
+    
+
+   
+    // submit the puppy
+    $form['submit'] = array(
+        '#type'=>'submit',
+        '#value'=>'Submit',
+    );
+    
+    return $form;
+}
+
+function week5_form_validate($form, &$form_state) {
+
+    if ($form_state['values']['name'] == 'Edward Sopcak') {
+        form_set_error('name', t('That was my grandfathers name, you can\'t have it! Choose another.'));
+    }
+
+}
+
+function week5_form_submit($form, &$form_state) {
+
+    // pull form data
+    $name = check_plain($form_state['values']['name']);
+    $gender = check_plain($form_state['values']['gender']);
+    $specialization = check_plain($form_state['values']['specialization']);
+    
+    $description = check_plain($form_state['values']['description']);
+    
+    // TBD: shove it all into a database table, including description
+    
+
+    // construct tweet & email
+    
+    // pull the specialization list
+    $specializations = variable_get('specializations');
+    
+    // yank out the "readable" translated text
+    $specialization_text = $specializations[$specialization];
+
+    $mesg = "Hello $name. I see you specialize in $specialization_text. Cool.";
+    si635helper_twitter($mesg);
+    mail("brenmh@umich.edu",'A post from Week5', $mesg);
+} 
