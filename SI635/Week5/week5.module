@@ -5,9 +5,9 @@ function week5_menu() {
     
     $items = array();
     $items['week5'] = array(
-       'title' => 'Week5',
-       'access callback'=>TRUE,
-       'page callback' => 'week5_start',
+       'title'           => 'Week5',
+       'access callback' => TRUE,
+       'page callback'   => 'week5_start',
     );
 
     return $items;
@@ -26,10 +26,10 @@ function week5_form($form,&$form_state) {
 
     // name field
     $form['name'] = array (
-        '#type'=>'textfield',
-        '#title'=>t('What\'s your name?'),
-        '#description'=>t('Enter your name already!'),
-        '#required'=>TRUE,
+        '#type'        => 'textfield',
+        '#title'       => t('What\'s your name?'),
+        '#description' => t('Enter your name already!'),
+        '#required'    => TRUE,
     );
 
     // gender field
@@ -38,8 +38,8 @@ function week5_form($form,&$form_state) {
     $gender['f'] = t('Female');
 
     $form['gender'] = array(
-        '#type' => 'radios',
-        '#title' => t('What is your gender?'),
+        '#type'    => 'radios',
+        '#title'   => t('What is your gender?'),
         '#options' => $gender,
     );
     
@@ -60,26 +60,25 @@ function week5_form($form,&$form_state) {
     variable_set('specializations', $specializations);  
       
     $form['specialization'] = array(
-        '#type' => 'select',
-        '#title' => t('What is your specialization?'),
+        '#type'     => 'select',
+        '#title'    => t('What is your specialization?'),
         '#required' => TRUE,
-        '#options' => $specializations,
+        '#options'  => $specializations,
     );
     
     // study description
     $form['description'] = array(
-        '#type' => 'textarea',
+        '#type'  => 'textarea',
         '#title' => t('Describe your study'),
-        '#rows' => '5',
-        '#cols' => '45',
+        '#rows'  => '5',
+        '#cols'  => '45',
     );
     
-
    
     // submit the puppy
     $form['submit'] = array(
-        '#type'=>'submit',
-        '#value'=>'Submit',
+        '#type'  =>'submit',
+        '#value' =>'Submit',
     );
     
     return $form;
