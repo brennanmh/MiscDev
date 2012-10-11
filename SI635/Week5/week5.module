@@ -60,10 +60,29 @@ function week5_form($form,&$form_state) {
     variable_set('specializations', $specializations);  
       
     $form['specialization'] = array(
-        '#type'     => 'select',
-        '#title'    => t('What is your specialization?'),
-        '#required' => TRUE,
-        '#options'  => $specializations,
+        '#type'        => 'select',
+        '#title'       => t('What are you specializing in?'),
+        '#description' => t('Choose all you are working on.'),
+        '#required'    => TRUE,
+        '#multiple'    => TRUE,
+        '#options'     => $specializations,
+    );
+    
+    // graudation date field
+    $grad_dates = array(
+        'Never' => 'Never',
+        '2012'  => '2012',
+        '2013'  => '2013',
+        '2014'  => '2014',
+        '2015'  => '2015',
+        '2016'  => '2016',
+        '2017'  => '2017',
+    );
+    
+    $form['grad_date'] = array(
+        '#type'    => 'select',
+        '#title'   => t('When do you expect to graduate?'),
+        '#options' => $grad_dates,
     );
     
     // study description
@@ -73,7 +92,21 @@ function week5_form($form,&$form_state) {
         '#rows'  => '5',
         '#cols'  => '45',
     );
+
+
+    // email address
+    $form['email'] = array(
+        '#type'        => 'textfield',
+        '#title'       => t('Enter your email address so we can contact you.'),
+        '#description' => t('Or don\'t if you want to be left alone.'),
+    );
     
+    // url
+    $form['url'] = array(
+        '#type'        => 'textfield',
+        '#title'       => t('Do you have a website?'),
+        '#description' => t('Enter the URL here and we\'ll check it out.'),
+    );
    
     // submit the puppy
     $form['submit'] = array(
@@ -89,6 +122,18 @@ function week5_form_validate($form, &$form_state) {
     if ($form_state['values']['name'] == 'Edward Sopcak') {
         form_set_error('name', t('That was my grandfathers name, you can\'t have it! Choose another.'));
     }
+    
+    if ($form_state['values']['grad_date'] == 'Never') {
+        form_set_error('grad_date', t('Never graduating?? Come on now, be optimistic'));
+    }
+    
+    if ($form_state['values']['email'] != '' && !valid_email_address($form_state['values']['email'])) {
+        form_set_error('email', t('Please enter a valid email address in that field if you put anything'));
+    }
+    
+    if ($form_state['values']['url'] != '' && !valid_url($form_state['values']['url'])) {
+        form_set_error('url', t('Please enter a valid URL in that field if you\'re gonna enter something'));
+    }
 
 }
 
@@ -97,22 +142,30 @@ function week5_form_submit($form, &$form_state) {
     // pull form data
     $name = check_plain($form_state['values']['name']);
     $gender = check_plain($form_state['values']['gender']);
-    $specialization = check_plain($form_state['values']['specialization']);
+    
+    $specialization_choices = $form_state['values']['specialization'];
     
     $description = check_plain($form_state['values']['description']);
     
-    // TBD: shove it all into a database table, including description
+    $grad_date = check_plain($form_state['values']['grad_date']);
     
-
+    
     // construct tweet & email
     
     // pull the specialization list
     $specializations = variable_get('specializations');
     
-    // yank out the "readable" translated text
-    $specialization_text = $specializations[$specialization];
+    // yank out the "readable" translated text for each
+    $specialization_choices_count = count($specialization_choices);
+    $specialization_text = '';
+    foreach ($specialization_choices as $specialization_index) {   
+        $specialization_text .= "$specializations[$specialization_index], ";
+    }
 
-    $mesg = "Hello $name. I see you specialize in $specialization_text. Cool.";
-    si635helper_twitter($mesg);
+    
+    // TBD: shove it all into a database table, including description
+
+    $mesg = "Hello $name. I see you are in $specialization_choices_count specialization(s): $specialization_text. Gonna graduate in $grad_date, huh? Cool.";
+    //si635helper_twitter($mesg);
     mail("brenmh@umich.edu",'A post from Week5', $mesg);
 } 
