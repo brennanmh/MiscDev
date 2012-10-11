@@ -69,15 +69,15 @@ function week5_form($form,&$form_state) {
     );
     
     // graudation date field
-    $grad_dates = array(
-        'Never' => 'Never',
-        '2012'  => '2012',
-        '2013'  => '2013',
-        '2014'  => '2014',
-        '2015'  => '2015',
-        '2016'  => '2016',
-        '2017'  => '2017',
-    );
+    $grad_dates = drupal_map_assoc(array(
+        t('Never'),
+        t('2012'),
+        t('2013'),
+        t('2014'),
+        t('2015'),
+        t('2016'),
+        t('2017'),
+    ));
     
     $form['grad_date'] = array(
         '#type'    => 'select',
@@ -85,12 +85,30 @@ function week5_form($form,&$form_state) {
         '#options' => $grad_dates,
     );
     
+    // class survey
+    $classes = drupal_map_assoc(array(
+        t('SI500'),
+        t('SI501'),
+        t('SI502'),
+        t('SI522'),
+        t('SI523'),
+        t('SI549'),
+    ));
+    
+    $form['classes'] = array(
+        '#type' => 'checkboxes',
+        '#title' => t('What classes have you taken?'),
+        '#options' => $classes,
+    );
+    
+      
     // study description
     $form['description'] = array(
-        '#type'  => 'textarea',
-        '#title' => t('Describe your study'),
-        '#rows'  => '5',
-        '#cols'  => '45',
+        '#type'        => 'textarea',
+        '#title'       => t('Describe your study'),
+        '#description' => t('Tell us what you like (or don\'t like) about it.'),
+        '#rows'        => '5',
+        '#cols'        => '45', 
     );
 
 
@@ -119,18 +137,22 @@ function week5_form($form,&$form_state) {
 
 function week5_form_validate($form, &$form_state) {
 
+    // make sure the name entered isn't my grandfathers :-).
     if ($form_state['values']['name'] == 'Edward Sopcak') {
         form_set_error('name', t('That was my grandfathers name, you can\'t have it! Choose another.'));
     }
     
+    // chide the user for chosing Never for graduation date.
     if ($form_state['values']['grad_date'] == 'Never') {
         form_set_error('grad_date', t('Never graduating?? Come on now, be optimistic'));
     }
     
+    // if user entered an email addr, make sure it's valid
     if ($form_state['values']['email'] != '' && !valid_email_address($form_state['values']['email'])) {
         form_set_error('email', t('Please enter a valid email address in that field if you put anything'));
     }
     
+    // if the user entered a URL, make sure it's valid
     if ($form_state['values']['url'] != '' && !valid_url($form_state['values']['url'])) {
         form_set_error('url', t('Please enter a valid URL in that field if you\'re gonna enter something'));
     }
@@ -141,12 +163,10 @@ function week5_form_submit($form, &$form_state) {
 
     // pull form data
     $name = check_plain($form_state['values']['name']);
-    $gender = check_plain($form_state['values']['gender']);
     
+    // I don't check_plain these. They are just indexes 
     $specialization_choices = $form_state['values']['specialization'];
-    
-    $description = check_plain($form_state['values']['description']);
-    
+        
     $grad_date = check_plain($form_state['values']['grad_date']);
     
     
@@ -162,10 +182,12 @@ function week5_form_submit($form, &$form_state) {
         $specialization_text .= "$specializations[$specialization_index], ";
     }
 
+    $mesg = "Yo $name. I see you are in $specialization_choices_count specialization(s): $specialization_text. Gonna graduate in $grad_date, huh? Cool.";
     
-    // TBD: shove it all into a database table, including description
-
-    $mesg = "Hello $name. I see you are in $specialization_choices_count specialization(s): $specialization_text. Gonna graduate in $grad_date, huh? Cool.";
-    //si635helper_twitter($mesg);
+    // limit string to 140 chars for twitter.
+    $twitter_mesg = substr($mesg, 0, 140);
+    si635helper_twitter($twitter_mesg);
+    
+    // email the full message
     mail("brenmh@umich.edu",'A post from Week5', $mesg);
 } 
