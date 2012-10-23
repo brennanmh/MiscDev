@@ -1,0 +1,21 @@
+<?php
+
+function week7_menu_alter(&$items)
+{
+//    $items['admin/modules']['title'] = t('Stay off this page');
+//    $items['admin/modules']['page callback'] = 'week7_disable';
+
+}
+
+
+function week7_disable()
+{
+    return "NO!!";
+}
+
+function hook_form_alter(&$form, &$form_state, $form_id)
+{
+    if ($form_id == "user_login_block") {
+        $form['pass']['#title'] = t("give me your secret");
+    }
+}
