@@ -1,0 +1,4 @@
+name=my_twitter_helper
+description="My version of the twitter helper module for SI635"
+core=7.x
+package=635

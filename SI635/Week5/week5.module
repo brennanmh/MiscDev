@@ -186,7 +186,8 @@ function week5_form_submit($form, &$form_state) {
     
     // limit string to 140 chars for twitter.
     $twitter_mesg = substr($mesg, 0, 140);
-    si635helper_twitter($twitter_mesg);
+    //si635helper_twitter($twitter_mesg);
+    my_twitter_helper_send($twitter_mesg);
     
     // email the full message
     mail("brenmh@umich.edu",'A post from Week5', $mesg);

@@ -1,21 +1,105 @@
 <?php
 
-function week7_menu_alter(&$items)
-{
-//    $items['admin/modules']['title'] = t('Stay off this page');
-//    $items['admin/modules']['page callback'] = 'week7_disable';
+/**
+ * Implements hook_menu_alter().
+ */
+function week7_menu_alter(&$items) {
 
+  dpm($items, t("menu items"));
+  
+  $items['week4/link']['title'] = 'This ain\'t week4 no more!!'; 
+  $items['week4/link']['page callback'] = 'week7_do_link';
+  
+  /* original link def
+  $items['week4/link'] = array(
+    'title' => 'Week4 Link',
+    'page callback' => 'week4_do_link',
+    'access callback' => 'user_access',
+    'access arguments' => array('admin week4'),
+  );
+  */
+
+  // Example - disable the page at node/add
+  //$items['node/add']['access callback'] = FALSE;
+}
+
+function week7_do_link()
+{
+  return l(t('no, no,no. Go here'), 'http://www.google.com');
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function week7_form_user_login_alter(&$form, &$form_state, $form_id) {
+
+  dpm($form, t("user_login form"));
+  
+  // Change the title of the name input on the form
+  $form['name']['#title'] = t('Your login name');
+  
+  // mess with the form submit stuff.
+
+  // this disables the submit button
+  $form['actions']['submit'] = array('#type' => 'submit',
+    '#value' => t('You Can\'t Log in'),
+    '#disabled' => TRUE,
+  );
+  
+  // this removes the submit button entirely
+  $form['actions']['submit'] = array();
+  
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function week7_form_user_register_form_alter(&$form, &$form_state, $form_id) {
+  dpm($form, t("user_register_form form"));
+
+  /*
+  if (isset($form['type']) && $form['type']['#value'] . '_node_settings' == $form_id) {
+    $form['workflow']['upload_' . $form['type']['#value']] = array(
+      '#type' => 'radios',
+      '#title' => t('Attachments'),
+      '#default_value' => variable_get('upload_' . $form['type']['#value'], 1),
+      '#options' => array(t('Disabled'), t('Enabled')),
+    );
+  }
+  */
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function week7_form_user_pass_alter(&$form, &$form_state, $form_id) {
+  dpm($form, t("user_pass form"));
+  
+  /*
+  if (isset($form['type']) && $form['type']['#value'] . '_node_settings' == $form_id) {
+    $form['workflow']['upload_' . $form['type']['#value']] = array(
+      '#type' => 'radios',
+      '#title' => t('Attachments'),
+      '#default_value' => variable_get('upload_' . $form['type']['#value'], 1),
+      '#options' => array(t('Disabled'), t('Enabled')),
+    );
+  }
+  */
+}
+
+/**
+ * Implements hook_page_alter().
+ */
+function week7_page_alter(&$page) {
+  // Add help text to the user login block.
+  /*
+  $page['sidebar_first']['user_login']['help'] = array(
+    '#weight' => -10,
+    '#markup' => t('To post comments or add new content, you first have to log in.'),
+  );
+  */
 }
 
 
-function week7_disable()
-{
-    return "NO!!";
-}
 
-function hook_form_alter(&$form, &$form_state, $form_id)
-{
-    if ($form_id == "user_login_block") {
-        $form['pass']['#title'] = t("give me your secret");
-    }
-}
+

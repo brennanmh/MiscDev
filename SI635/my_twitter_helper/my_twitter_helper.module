@@ -1,0 +1,15 @@
+<?php
+function my_twitter_helper_send($msg) {
+   require_once 'Services/Twitter.php';
+   require_once 'HTTP/OAuth/Consumer.php';
+   try {
+      $twitter = new Services_Twitter();
+      require('oauth.inc');
+      $twitter->setOAuth($oauth);
+      $status = $twitter->statuses->update($msg);
+      drupal_set_message("Post complete");
+   } catch (Services_Twitter_Exception $e) {
+      drupal_set_message(check_plain(check_plain($e->getMessage())));
+  }
+}
+
