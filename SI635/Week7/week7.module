@@ -5,22 +5,12 @@
  */
 function week7_menu_alter(&$items) {
 
-  dpm($items, t("menu items"));
+  // this only actually prints on a cache flush, it seems.
+  // dpm($items, t("menu items"));
   
   $items['week4/link']['title'] = 'This ain\'t week4 no more!!'; 
   $items['week4/link']['page callback'] = 'week7_do_link';
   
-  /* original link def
-  $items['week4/link'] = array(
-    'title' => 'Week4 Link',
-    'page callback' => 'week4_do_link',
-    'access callback' => 'user_access',
-    'access arguments' => array('admin week4'),
-  );
-  */
-
-  // Example - disable the page at node/add
-  //$items['node/add']['access callback'] = FALSE;
 }
 
 function week7_do_link()
@@ -57,17 +47,30 @@ function week7_form_user_login_alter(&$form, &$form_state, $form_id) {
 function week7_form_user_register_form_alter(&$form, &$form_state, $form_id) {
   dpm($form, t("user_register_form form"));
 
+  // steal the submit
   /*
-  if (isset($form['type']) && $form['type']['#value'] . '_node_settings' == $form_id) {
-    $form['workflow']['upload_' . $form['type']['#value']] = array(
-      '#type' => 'radios',
-      '#title' => t('Attachments'),
-      '#default_value' => variable_get('upload_' . $form['type']['#value'], 1),
-      '#options' => array(t('Disabled'), t('Enabled')),
-    );
-  }
+  // this adds my submit handler to the submit button (still calls the other one(s)):
+  $form['#submit'][] = 'week7_user_register_submit';
+  
+  dpm($form, t("user_register_form form s1"));
+ 
+  // this makes this submit the first one called and clears whatever was there.
+  $form['#submit'][0] = 'week7_user_register_submit';
+  
+  dpm($form, t("user_register_form form s2"));
   */
+  
+  // this make mine the only submit handler
+  $form['#submit'] = array('week7_user_register_submit');
+  
+  dpm($form, t("user_register_form form s3"));
+
 }
+
+function week7_user_register_submit($form, &$form_state) {
+  dpm($form_state, t('user_register_submit form_state'));
+}
+
 
 /**
  * Implements hook_form_alter().
