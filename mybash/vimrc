@@ -1,0 +1,9 @@
+set autoindent
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set smarttab
+syntax on
+filetype on
+au BufNewFile,BufRead *.install set filetype=php
+colorscheme slate

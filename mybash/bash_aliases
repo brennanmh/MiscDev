@@ -1,0 +1,17 @@
+alias sr='sudo'
+alias mroe='more'
+alias h='history'
+alias td='date +%Y-%m-%d'
+alias tdt='date +%Y-%m-%d-%H-%M-%S'
+alias vimprint='vim -me -e -c ":hardcopy >%.ps" -c ":q"'
+
+# this is basically an alias
+gvim() { /usr/bin/gvim "$@" 1>/dev/null 2>&1 ;}
+subl() { /usr/bin/subl "$@" 1>/dev/null 2>&1 ;}
+smartgit() { ~/Applications/smartgit/bin/smartgithg.sh 1>/dev/null 2>&1 ;}
+adt() { ~/Applications/ADT/eclipse/eclipse 1>/dev/null 2>&1 ;}
+acroread() { /usr/bin/acroread "$@" 1>/dev/null 2>&1 ;}
+
+function cmore() {
+  /usr/share/source-highlight/src-hilite-lesspipe.sh "$@" | less -R
+}
